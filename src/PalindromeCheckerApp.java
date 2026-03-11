@@ -41,57 +41,63 @@ p/**
  * Abstract representation of a Room in the hotel.
  * This class defines the common structure for all room types.
  */
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
- * RoomInventory
- *
- * This class manages the availability of different room types
- * using a centralized HashMap structure.
- *
- * It acts as the single source of truth for room availability
- * across the system.
+ * Handles room booking and reservation creation.
  */
-public class RoomInventory {
+public class ReservationService {
 
-    private Map<String, Integer> inventory;
+    private RoomInventory inventory;
+    private List<Reservation> reservations;
 
-    /**
-     * Constructor initializes room availability.
-     */
-    public RoomInventory() {
-        inventory = new HashMap<>();
-
-        // Register room types with initial availability
-        inventory.put("Single Room", 5);
-        inventory.put("Double Room", 3);
-        inventory.put("Suite Room", 2);
+    public ReservationService(RoomInventory inventory) {
+        this.inventory = inventory;
+        this.reservations = new ArrayList<>();
     }
 
     /**
-     * Returns current availability for a given room type.
+     * Books a room if available and creates a reservation.
      */
-    public int getAvailability(String roomType) {
-        return inventory.getOrDefault(roomType, 0);
+    public void bookRoom(String guestName, String roomType, Room room) {
+
+        int available = inventory.getAvailability(roomType);
+
+        if (available > 0) {
+
+            // Reduce inventory
+            inventory.updateAvailability(roomType, available - 1);
+
+            // Generate reservation ID
+            String reservationId = UUID.randomUUID().toString().substring(0, 8);
+
+            Reservation reservation = new Reservation(
+                    reservationId,
+                    guestName,
+                    roomType,
+                    room.price
+            );
+
+            reservations.add(reservation);
+
+            System.out.println("\nBooking Successful!");
+            reservation.displayReservation();
+
+        } else {
+            System.out.println("\nSorry, no " + roomType + " available.");
+        }
     }
 
-    /**
-     * Updates availability for a specific room type.
-     */
-    public void updateAvailability(String roomType, int newCount) {
-        inventory.put(roomType, newCount);
-    }
+    public void showAllReservations() {
 
-    /**
-     * Displays the current inventory state.
-     */
-    public void displayInventory() {
-        System.out.println("Current Room Inventory:");
-        System.out.println("------------------------");
+        System.out.println("\nAll Reservations");
+        System.out.println("----------------");
 
-        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue() + " available");
+        for (Reservation r : reservations) {
+            r.displayReservation();
+            System.out.println();
         }
     }
 }
