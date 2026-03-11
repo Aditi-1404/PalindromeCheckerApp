@@ -37,19 +37,61 @@ p/**
  * @author Arieve
  * @version 1.0
  */
-public class HotelBookingApp {
+/**
+ * Abstract representation of a Room in the hotel.
+ * This class defines the common structure for all room types.
+ */
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * RoomInventory
+ *
+ * This class manages the availability of different room types
+ * using a centralized HashMap structure.
+ *
+ * It acts as the single source of truth for room availability
+ * across the system.
+ */
+public class RoomInventory {
+
+    private Map<String, Integer> inventory;
 
     /**
-     * Main method – entry point of the application.
-     * The JVM starts program execution from this method.
-     *
-     * @param args command line arguments
+     * Constructor initializes room availability.
      */
-    public static void main(String[] args) {
+    public RoomInventory() {
+        inventory = new HashMap<>();
 
-        System.out.println("Welcome to the Hotel Booking System!");
-        System.out.println("Application: Hotel Booking System");
-        System.out.println("Version: v1.0");
+        // Register room types with initial availability
+        inventory.put("Single Room", 5);
+        inventory.put("Double Room", 3);
+        inventory.put("Suite Room", 2);
+    }
 
+    /**
+     * Returns current availability for a given room type.
+     */
+    public int getAvailability(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
+    }
+
+    /**
+     * Updates availability for a specific room type.
+     */
+    public void updateAvailability(String roomType, int newCount) {
+        inventory.put(roomType, newCount);
+    }
+
+    /**
+     * Displays the current inventory state.
+     */
+    public void displayInventory() {
+        System.out.println("Current Room Inventory:");
+        System.out.println("------------------------");
+
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue() + " available");
+        }
     }
 }
