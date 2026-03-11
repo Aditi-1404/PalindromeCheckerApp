@@ -11,14 +11,39 @@
  * @author Arieve
  * @version 1.0
  */
-public class HotelBookingApplication {
+/**
+ * HotelBookingApplication
+ *
+ * This class represents the entry point of the Hotel Booking application.
+ * It demonstrates how a Java program begins execution and produces
+ * console output.
+ *
+ * The application prints a welcome message along with the
+ * application name and version information.
+ *
+ * @author Arieve
+ * @version 1.0
+ */
+p/**
+ * HotelBookingApp
+ *
+ * This class represents the entry point of the Hotel Booking application.
+ * It demonstrates how a Java program begins execution and prints
+ * basic information to the console.
+ *
+ * The program prints a welcome message along with the application
+ * name and version when it starts.
+ *
+ * @author Arieve
+ * @version 1.0
+ */
+public class HotelBookingApp {
 
     /**
-     * The main method is the starting point of the Java application.
-     * The Java Virtual Machine (JVM) calls this method when the
-     * program is executed.
+     * Main method – entry point of the application.
+     * The JVM starts program execution from this method.
      *
-     * @param args command line arguments passed to the application
+     * @param args command line arguments
      */
     public static void main(String[] args) {
 
@@ -26,6 +51,5 @@ public class HotelBookingApplication {
         System.out.println("Application: Hotel Booking System");
         System.out.println("Version: v1.0");
 
-        System.out.println("Application started successfully.");
     }
 }
